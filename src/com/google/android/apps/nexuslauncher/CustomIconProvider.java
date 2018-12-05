@@ -25,6 +25,7 @@ import com.android.launcher3.shortcuts.DeepShortcutManager;
 import com.android.launcher3.util.ComponentKey;
 import com.google.android.apps.nexuslauncher.clock.CustomClock;
 import com.google.android.apps.nexuslauncher.clock.DynamicClock;
+import com.zynda.android.LauncherIconTheme;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -97,11 +98,12 @@ public class CustomIconProvider extends DynamicIconProvider {
             if (mFactory.packCalendars.containsKey(component)) {
                 try {
                     Resources res = pm.getResourcesForApplication(mFactory.iconPack);
-                    int drawableId = res.getIdentifier(mFactory.packCalendars.get(component)
-                            + Calendar.getInstance().get(Calendar.DAY_OF_MONTH), "drawable", mFactory.iconPack);
+                    int drawableId = res.getIdentifier(mFactory.packCalendars.get(component), "drawable", mFactory.iconPack);
                     if (drawableId != 0) {
+                        //drawable=LauncherIconTheme.getCalenderIcon(res,drawableId);
                         drawable = pm.getDrawable(mFactory.iconPack, drawableId, null);
                     }
+
                 } catch (PackageManager.NameNotFoundException ignored) {
                 }
             } else if (mFactory.packComponents.containsKey(component)) {

@@ -41,7 +41,8 @@ public class CustomIconUtils {
             "com.teslacoilsw.launcher.THEME",
             "com.gau.go.launcherex.theme",
             "org.adw.launcher.THEMES",
-            "org.adw.launcher.icons.ACTION_PICK_ICON"
+            "org.adw.launcher.icons.ACTION_PICK_ICON",
+            "com.nbc.willcloud.themestore"
     };
 
     static HashMap<String, CharSequence> getPackProviders(Context context) {
@@ -79,7 +80,8 @@ public class CustomIconUtils {
     }
 
     static boolean usingValidPack(Context context) {
-        return isPackProvider(context, getCurrentPack(context));
+        return true;
+        //return isPackProvider(context, getCurrentPack(context));
     }
 
     static void applyIconPackAsync(final Context context) {

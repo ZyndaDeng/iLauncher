@@ -5,12 +5,19 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 
 import com.android.launcher3.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +71,66 @@ public class LauncherIconTheme {
 
         }
         return null;
+    }
+
+    public static Bitmap getCalenderIcon(Resources res, @DrawableRes int resid){
+        Bitmap b=BitmapFactory.decodeResource(res,resid);
+
+        Canvas canvas=new Canvas(b);
+        final float mDensity = res.getDisplayMetrics().density;
+
+        String dayString=String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        int week=Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        String weekStr="";
+        if(week==1){
+            weekStr="星期日";
+        }else if(week==2){
+            weekStr="星期一";
+        }else if(week==3){
+            weekStr="星期二";
+        }else if(week==4){
+            weekStr="星期三";
+        }else if(week==5){
+            weekStr="星期四";
+        }else if(week==6){
+            weekStr="星期五";
+        }else if(week==7){
+            weekStr="星期六";
+        }
+
+        Paint datePaint = new Paint();
+        datePaint.setTypeface(Typeface.DEFAULT_BOLD);
+        datePaint.setTextSize((int)30F * mDensity);
+        datePaint.setColor(0xff727272);
+        datePaint.setAntiAlias(true);
+
+        Rect rect = new Rect();
+        datePaint.getTextBounds(dayString,0,dayString.length(),rect);
+        int hoffset = 20;
+        int width1 = rect.right - rect.left;
+        int height1 = rect.bottom - rect.top;
+        int width2 = b.getWidth();
+        int height2 = b.getHeight() + hoffset;
+
+        canvas.drawText(dayString,(width2 - width1)/2 - rect.left,(height2 - height1)/2 - rect.top,datePaint);
+
+        Paint weekPaint = new Paint();
+        weekPaint.setTypeface(Typeface.DEFAULT);
+        weekPaint.setTextSize((int)12F * mDensity);
+        weekPaint.setColor(0xffffffff);
+        weekPaint.setAntiAlias(true);
+
+        datePaint.getTextBounds(dayString,0,dayString.length(),rect);
+        int hoffset2 = 9;
+         width1 = rect.right - rect.left;
+         height1 = rect.bottom - rect.top;
+         width2 = b.getWidth();
+         height2 = b.getHeight() + hoffset2;
+
+        canvas.drawText(weekStr,(width2 - width1)/2 - rect.left,(height2 - height1)/2 - rect.top,datePaint);
+
+
+        return b;
     }
     //根据包名、类名获取资源定义的图标资源id
     private String getIconId(String packageName , String className){
