@@ -80,8 +80,7 @@ public class CustomIconUtils {
     }
 
     static boolean usingValidPack(Context context) {
-        return true;
-        //return isPackProvider(context, getCurrentPack(context));
+        return isPackProvider(context, getCurrentPack(context));
     }
 
     static void applyIconPackAsync(final Context context) {
